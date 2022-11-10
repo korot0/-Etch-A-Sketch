@@ -8,27 +8,55 @@
 body {
     margin: 0;
     background-color: rgb(53, 53, 53);
+    color: bisque;
 }
 
 #header {
     text-align: center;
-    color: bisque;
     font-size: larger;
     background-color: rgb(94, 94, 94);
     padding: 10px;
 }
 
+/* MAIN CONTAINER */
+#container{
+    border: 2px solid brown;
+    display: flex;
+    width: 100%;
+    margin-top: 40px;
+}
+
+/* SETTINGS CONTAINER */
+#settings-container {
+    border: 2px solid hotpink;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#gridSize {
+    margin-top: 5px;
+    font-size: larger;
+}
+
+p {
+    font-size: larger;
+}
+
+button {
+    display: block;
+}
+
+/* GRID CONTAINER */
 #grid-container {
     width: 560px;
     height: 560px;
-    background-color: rgb(253, 255, 238);
+    background-color: bisque;
     border-radius: 5px;
-    margin: auto;
-    margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
 }
 
-#reloadBtn {
-    text-align: center;
-}
+/* .square {
+    border: 1px solid gray;
+} */
