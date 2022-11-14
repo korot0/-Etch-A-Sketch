@@ -7,20 +7,20 @@
 
 body {
     margin: 0;
-    background-color: rgb(53, 53, 53);
-    color: bisque;
+    background-color: #222;
+    color: #efefef;
 }
 
 #header {
     text-align: center;
     font-size: larger;
-    background-color: rgb(94, 94, 94);
+    background-color: #353531;
     padding: 10px;
 }
 
 /* MAIN CONTAINER */
 #container{
-    border: 2px solid brown;
+    /* border: 2px solid brown; */
     display: flex;
     width: 100%;
     margin-top: 40px;
@@ -29,7 +29,7 @@ body {
 
 /* SETTINGS CONTAINER */
 #settings-container {
-    border: 2px solid hotpink;
+    /* border: 2px solid hotpink; */
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -46,6 +46,10 @@ p {
     font-size: larger;
 }
 
+h2 {
+    margin: 0;
+}
+
 #gridSize,
 #slider {
     text-align: center;
@@ -57,8 +61,8 @@ button {
     border-style: none;
     width: 100%;
     background-color: rgb(53, 53, 53);
-    color: bisque;
-    border: 2px solid bisque;
+    color: #efefef;
+    border: 2px solid #efefef;
     border-radius: 4px;
     font-size: larger;
     padding: 5px 15px;
@@ -69,7 +73,7 @@ button {
     width: 650px;
     min-width: 650px;
     height: 650px;
-    background-color: bisque;
+    background-color: #efefef;
     display: flex;
     flex-wrap: wrap;
 }
