@@ -6,34 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>etch-a-sketch</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="index.js" defer></script>
 </head>
 <body>
     <div id="header">
         <h1>etch-a-sketch</h1>
     </div> 
-
     <div id="container">
-
         <div id="settings-container">
             <h2>Settings</h2>
             <div id="slider">
-                <input id="sliderEl" type="range" min="10" max="50" value="16">
+                <input id="sliderEl" type="range" min="10" max="50" value="24">
                 <div id="gridSize">Grid Size: <span id="sizeTextEl"></span></div>
             </div>
             <div id="reloadBtn">
-                <button id="erase">Erase</button>
-                <button>Precision Eraser</button>
-                <button id="randomColor">Random Color</button>
-                <button>Shade</button>
-                <button>Select Color</button>
-                <button id="showGrid">Show Grid</button>
+                <input type="checkbox" id="showGrid-el" value="choice 1"><label for="showGrid-el">Show Grid</label>
+                <button id="clearBtn-el">Clear</button>
+                <input type="checkbox" id="eraserBtn-el" value="choice 1"><label for="eraserBtn-el">Eraser</label>
+                <input type="checkbox" id="shadeBtn-el" value="choice 1"><label for="shadeBtn-el">Shade</label>
+                <input type="checkbox" id="randomColorBtn-el" value="choice 1"><label for="randomColorBtn-el">Random Color</label>
+                <input type="checkbox" id="colorBtn-el" value="choice 1"><label for="colorBtn-el">Color</label>
             </div>
         </div>
-
         <div id="grid-container" ondragstart="return false;" ondrop="return false;"></div>
-
     </div>
-    
+    <footer>
+        <i style="font-size:24px" class="fa">&#xf09b;</i><a href="https://github.com/korot0" target="_blank"> By korot0</a>
+    </footer>
 </body>
 </html>

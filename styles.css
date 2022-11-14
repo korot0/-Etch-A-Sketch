@@ -11,6 +11,7 @@ body {
     color: #efefef;
 }
 
+/* HEADER */
 #header {
     text-align: center;
     font-size: larger;
@@ -42,10 +43,6 @@ body {
     font-size: larger;
 }
 
-p {
-    font-size: larger;
-}
-
 h2 {
     margin: 0;
 }
@@ -55,17 +52,41 @@ h2 {
     text-align: center;
 }
 
+input[type='checkbox'] {
+    display: none;
+}
+
+input[type='checkbox'] + label, 
 button {
     display: block;
     margin-bottom: 15px;
-    border-style: none;
     width: 100%;
-    background-color: rgb(53, 53, 53);
     color: #efefef;
+    background-color: #353531;
     border: 2px solid #efefef;
     border-radius: 4px;
     font-size: larger;
     padding: 5px 15px;
+    cursor: pointer;
+    text-align: center;
+}
+
+input[type='checkbox']:checked + label {
+    background-color:#efefef;
+    color: #353531;
+    border: 2px solid #353531;
+}
+
+input[type='checkbox']:hover + label {
+    background-color:#efefef;
+    color: #353531;
+    border: 2px solid #353531;
+}
+
+button:hover {
+    background-color:#efefef;
+    color: #353531;
+    border: 2px solid #353531;
 }
 
 /* GRID CONTAINER */
@@ -76,4 +97,24 @@ button {
     background-color: #efefef;
     display: flex;
     flex-wrap: wrap;
+}
+
+/* FOOTER */
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    font-size: x-large;
+    background-color: #353531;
+    padding: 30px;
+}
+
+a {
+    color: #efefef;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }

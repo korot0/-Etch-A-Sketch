@@ -1,9 +1,13 @@
 // do white and dark mode
 // cubeta
-
 const gridContainer = document.getElementById('grid-container');
-const eraseBtn = document.getElementById('erase');
-const randomColorBtn = document.getElementById('randomColor');
+//BUTTON ELEMENTS
+const showGridBtn = document.getElementById('showGrid-el');
+const clearBtn = document.getElementById('clearBtn-el');
+const eraserBtn = document.getElementById('eraserBtn-el');
+const shadeBtn = document.getElementById('shadeBtn-el');
+const randomColorBtn = document.getElementById('randomColorBtn-el');
+const colorBtn = document.getElementById('colorBtn-el');
 
 // SLIDER GRID SIZE TEXT OUTPUT
 const sliderEl = document.getElementById('sliderEl');
@@ -40,13 +44,12 @@ function getRandomColor() {
     return 'rgb' + `(${arrayRandomColor.toString()})`;
 }
 
-
 //GRID MAKER (GIVE AN EXPLANATION OF WHAT IS GOING ON HERE!)
 function grid() {
     for (let i = 1; i <= gridSize; i++) {
         //CREATE SQUARES
         const divs = document.createElement('div');
-        // divs.style.border = '1px solid gray';
+        divs.style.border = '1px solid #222';
         divs.style.width = `${widthAndHeight}px`;
         divs.style.height = `${widthAndHeight}px`;
         gridContainer.appendChild(divs);
@@ -54,13 +57,18 @@ function grid() {
         //DRAW------------------------------------------------------------------------
         divs.addEventListener('mouseover', () => {
             if(mouseDown) divs.style.backgroundColor = 'black';
+            if(mouseDown && randomColorBtn.checked) divs.style.backgroundColor = getRandomColor();
+            if(mouseDown && eraserBtn.checked) divs.style.backgroundColor = '#efefef';
+
         });
         divs.addEventListener('mousedown', () => {
-             divs.style.backgroundColor = 'black';
+            divs.style.backgroundColor = 'black';
+            if(randomColorBtn.checked) divs.style.backgroundColor = getRandomColor();
+            if(eraserBtn.checked) divs.style.backgroundColor = '#efefef';
         });
     
         // ERASE----------------------------------------------------------------------
-        eraseBtn.addEventListener('click', () => {
+        clearBtn.addEventListener('click', () => {
             divs.style.backgroundColor = '#efefef';
         });
     }
