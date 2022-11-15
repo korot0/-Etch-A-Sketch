@@ -1,5 +1,6 @@
 // do white and dark mode
 // cubeta
+
 const gridContainer = document.getElementById('grid-container');
 //BUTTON ELEMENTS
 const showGridBtn = document.getElementById('showGrid-el');
@@ -9,7 +10,7 @@ const shadeBtn = document.getElementById('shadeBtn-el');
 const randomColorBtn = document.getElementById('randomColorBtn-el');
 const colorBtn = document.getElementById('colorBtn-el');
 
-// SLIDER GRID SIZE TEXT OUTPUT
+//SLIDER 'GRID SIZE: ' OUTPUT
 const sliderEl = document.getElementById('sliderEl');
 const sliderOutput = document.getElementById('sizeTextEl');
 sliderOutput.textContent = sliderEl.value + ' x ' + sliderEl.value;
@@ -35,34 +36,41 @@ gridContainer.onmousedown = () => mouseDown = true;
 gridContainer.onmouseup = () => mouseDown = false;
 gridContainer.onmouseleave = () => mouseDown = false;
 
-//To select random color
+//RANDOM COLOR
 function getRandomColor() {
     let arrayRandomColor = [];
     for (let i = 0; i < 3; i++) {
-        arrayRandomColor.push(Math.floor(Math.random() * 256))
+        arrayRandomColor.push(Math.floor(Math.random() * 256));
     }
     return 'rgb' + `(${arrayRandomColor.toString()})`;
 }
+
+//COLOR PICKER
+const colorPickerBtn = document.getElementById('colorPickerBtn-el');
+let color = '#000000';
+colorPickerBtn.oninput = () => color = colorPickerBtn.value;
+
 
 //GRID MAKER (GIVE AN EXPLANATION OF WHAT IS GOING ON HERE!)
 function grid() {
     for (let i = 1; i <= gridSize; i++) {
         //CREATE SQUARES
         const divs = document.createElement('div');
-        divs.style.border = '1px solid #222';
+        // divs.style.border = '1px solid #222';
+        // if(showGridBtn.checked) divs.style.border = '1px solid #222'; 
         divs.style.width = `${widthAndHeight}px`;
         divs.style.height = `${widthAndHeight}px`;
         gridContainer.appendChild(divs);
     
         //DRAW------------------------------------------------------------------------
         divs.addEventListener('mouseover', () => {
-            if(mouseDown) divs.style.backgroundColor = 'black';
+            if(mouseDown) divs.style.backgroundColor = color;
             if(mouseDown && randomColorBtn.checked) divs.style.backgroundColor = getRandomColor();
             if(mouseDown && eraserBtn.checked) divs.style.backgroundColor = '#efefef';
 
         });
         divs.addEventListener('mousedown', () => {
-            divs.style.backgroundColor = 'black';
+            divs.style.backgroundColor = color;
             if(randomColorBtn.checked) divs.style.backgroundColor = getRandomColor();
             if(eraserBtn.checked) divs.style.backgroundColor = '#efefef';
         });
