@@ -44,6 +44,8 @@ function getRandomColor() {
     return 'rgb' + `(${arrayRandomColor})`;
 }
 
+console.log(getRandomColor())
+
 //COLOR PICKER
 const colorPickerBtn = document.getElementById('colorPickerBtn-el');
 let color = '#000000';
@@ -57,26 +59,26 @@ function grid() {
     for (let i = 1; i <= gridSize; i++) {
         //CREATE SQUARES
         const divs = document.createElement('div');
-        // divs.style.border = '1px solid #222';
-        // if(showGridBtn.checked) divs.style.border = '1px solid #222'; 
         divs.style.width = `${widthAndHeight}px`;
         divs.style.height = `${widthAndHeight}px`;
         gridContainer.appendChild(divs);
-    
-        //DRAW------------------------------------------------------------------------
+        //SHOW GRID BUTTON
+        showGridBtn.checked ? divs.style.border = '1px solid #222' : divs.style.border = '';
+        showGridBtn.addEventListener('click', function() {
+            showGridBtn.checked ? divs.style.border = '1px solid #222' : divs.style.border = '';
+        });
+        //DRAW
         divs.addEventListener('mouseover', () => {
             if(mouseDown) divs.style.backgroundColor = color;
             if(mouseDown && randomColorBtn.checked) divs.style.backgroundColor = getRandomColor();
             if(mouseDown && eraserBtn.checked) divs.style.backgroundColor = '#efefef';
-
         });
-        divs.addEventListener('mousedown', () => {
+        divs.addEventListener('click', () => {
             divs.style.backgroundColor = color;
             if(randomColorBtn.checked) divs.style.backgroundColor = getRandomColor();
             if(eraserBtn.checked) divs.style.backgroundColor = '#efefef';
         });
-    
-        // ERASE----------------------------------------------------------------------
+        // ERASE
         clearBtn.addEventListener('click', () => {
             divs.style.backgroundColor = '#efefef';
         });
