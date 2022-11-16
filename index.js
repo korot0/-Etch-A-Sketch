@@ -41,7 +41,7 @@ function getRandomColor() {
     for (let i = 0; i < 3; i++) {
         arrayRandomColor.push(Math.floor(Math.random() * 256));
     }
-    return 'rgb' + `(${arrayRandomColor.toString()})`;
+    return 'rgb' + `(${arrayRandomColor})`;
 }
 
 //COLOR PICKER
@@ -51,7 +51,6 @@ colorPickerBtn.oninput = function () {
     color = colorPickerBtn.value;
     document.getElementById('color-code').textContent = colorPickerBtn.value;
 } 
-
 
 //GRID MAKER (GIVE AN EXPLANATION OF WHAT IS GOING ON HERE!)
 function grid() {
