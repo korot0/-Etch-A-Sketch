@@ -8,7 +8,6 @@ const clearBtn = document.getElementById('clearBtn-el');
 const eraserBtn = document.getElementById('eraserBtn-el');
 const shadeBtn = document.getElementById('shadeBtn-el');
 const randomColorBtn = document.getElementById('randomColorBtn-el');
-const colorBtn = document.getElementById('colorBtn-el');
 
 //SLIDER 'GRID SIZE: ' OUTPUT
 const sliderEl = document.getElementById('sliderEl');
@@ -48,7 +47,10 @@ function getRandomColor() {
 //COLOR PICKER
 const colorPickerBtn = document.getElementById('colorPickerBtn-el');
 let color = '#000000';
-colorPickerBtn.oninput = () => color = colorPickerBtn.value;
+colorPickerBtn.oninput = function () {
+    color = colorPickerBtn.value;
+    document.getElementById('color-code').textContent = colorPickerBtn.value;
+} 
 
 
 //GRID MAKER (GIVE AN EXPLANATION OF WHAT IS GOING ON HERE!)

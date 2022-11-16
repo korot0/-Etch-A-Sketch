@@ -45,6 +45,7 @@ body {
 
 h2 {
     margin: 0;
+    text-align: center;
 }
 
 #gridSize,
@@ -81,38 +82,25 @@ button:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
-/* #colorPickerBtn-el {
-   border-radius: 100%;
-   height: 60px;
-   width: 60px;
-   border: none;
-   outline: none;
-   -webkit-appearance: none;
-   display: block;
-   margin: auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+#color-header {
+    margin: 10px 0;
+    width: 100%;
+    font-size: larger;
+    text-align: center;
 }
-
-#colorPickerBtn-el::-webkit-color-swatch-wrapper {
-    padding: 0; 
-}
-
-#colorPickerBtn-el::-webkit-color-swatch {
-    border: none;
-    border-radius: 50%;
-} */
 
 #colorPickerBtn-el {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    width: 100px;
-    height: 100px;
+    width: 90%;
+    height: 70px;
     border: none;
     cursor: pointer;
     background-color: transparent;
     display: block;
     margin: auto;
+    margin-bottom: 15px;
 }
 
 #colorPickerBtn-el::-webkit-color-swatch {
