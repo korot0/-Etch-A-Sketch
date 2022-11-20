@@ -1,6 +1,3 @@
-// do white and dark mode
-// cubeta
-
 const gridContainer = document.getElementById('grid-container');
 //BUTTON ELEMENTS
 const showGridBtn = document.getElementById('showGrid-el');
@@ -9,7 +6,7 @@ const eraserBtn = document.getElementById('eraserBtn-el');
 const shadeBtn = document.getElementById('shadeBtn-el');
 const randomColorBtn = document.getElementById('randomColorBtn-el');
 
-//SLIDER 'GRID SIZE: ' OUTPUT
+//SLIDER OUTPUT E.G 'Grid Size: 5 x 5' 
 const sliderEl = document.getElementById('sliderEl');
 const sliderOutput = document.getElementById('sizeTextEl');
 sliderOutput.textContent = sliderEl.value + ' x ' + sliderEl.value;
@@ -18,24 +15,76 @@ sliderEl.oninput = function() {
 }
 
 //HEIGHT AND WIDTH OF DIVS INSIDE GRID
-let gridSize = sliderEl.value * sliderEl.value;
 let widthAndHeight = 650 / sliderEl.value;
-
-//GIVE EXPLANATION HERE AS WELL!
+//This function changes the grid size. First it clears the previous grid. Then it changes de grid size depending on the current value (e.target.value) of the slider by multiplying e.g 16 x 16 = 256 number of squares. Then it dictates the width and height of each square by diving the .... KEEP EXPLAINING WHY DIVIDE 650px?
 document.querySelector('input').addEventListener('change', e => {
     gridContainer.innerHTML = '';
-    gridSize = e.target.value * e.target.value;
     widthAndHeight = 650 / e.target.value;
-    grid();
+    createGrid(e.target.value, e.target.value);
 });
 
-//write an explanation here... cuz I already forgot wtf is going on
+//GRID MAKER (GIVE AN EXPLANATION OF WHAT IS GOING ON HERE!)
+function createGrid(columns, rows) {
+    for (let i = 1; i <= (columns * rows); i++) {
+        //CREATE SQUARES
+        const divs = document.createElement('div');
+        divs.style.width = `${widthAndHeight}px`;
+        divs.style.height = `${widthAndHeight}px`;
+        gridContainer.appendChild(divs).classList.add('divs'); // * //
+        // SHOW GRID 
+        showGridBtn.checked ? divs.style.border = '1px solid #353531' : divs.style.border = '';
+        showGridBtn.addEventListener('click', function() {
+            showGridBtn.checked ? divs.style.border = '1px solid #353531' : divs.style.border = '';
+        });
+    }
+}
+createGrid(sliderEl.value, sliderEl.value);
+
+//BIG LESSON LEARNED HERE!!! REMEMBER THE BIG ASS FUNCTION WE HAD? THAT WAS AVOIDED BY USING '.classList.add('divs'); ON 'gridContainer.appendChild(divs)' NOW WE CAN ACCESS THE DIVS INSIDE THE createGrid() FUNCTION IN THE GLOBAL SCOPE BY TARGETING THE '.divs'. REFER TO *
+let divsEl = document.querySelectorAll('.divs');
+
+// CLEAR BUTTON
+divsEl.forEach((divEl) => {
+    clearBtn.addEventListener('click', () =>{
+        divEl.style.backgroundColor ='#efefef';
+    });
+});
+
+//DRAWING EXPLAIN!!!
+//In order to draw only when clicking and holding, not when hovering, here is what happens: When in createGrid() mouseover activates when hovering through an element. KEEP EXPLAINING...
 let mouseDown = false;
 gridContainer.onmousedown = () => mouseDown = true;
 gridContainer.onmouseup = () => mouseDown = false;
 gridContainer.onmouseleave = () => mouseDown = false;
 
-//RANDOM COLOR
+divsEl.forEach((divEl) => {
+    divEl.addEventListener('mouseover', () => {
+        if (mouseDown && eraserBtn.checked) {
+            divEl.style.backgroundColor = '#efefef';
+        } else if (mouseDown && randomColorBtn.checked) {
+            divEl.style.backgroundColor = getRandomColor();
+        } else if (mouseDown) {
+            divEl.style.backgroundColor = color;
+        }
+    });
+    divEl.addEventListener('click', () => {
+        divEl.style.backgroundColor = color;
+        if (eraserBtn.checked) {
+            divEl.style.backgroundColor = '#efefef';
+        } else if (randomColorBtn.checked) {
+            divEl.style.backgroundColor = getRandomColor();
+        }
+    });
+});
+
+//COLOR PICKER FUNCTION
+const colorPickerBtn = document.getElementById('colorPickerBtn-el');
+let color = '#000000';
+colorPickerBtn.oninput = function () {
+    color = colorPickerBtn.value;
+    document.getElementById('color-code').textContent = colorPickerBtn.value;
+} 
+//RANDOM COLOR FUNCTION
 function getRandomColor() {
     let arrayRandomColor = [];
     for (let i = 0; i < 3; i++) {
@@ -44,44 +93,9 @@ function getRandomColor() {
     return 'rgb' + `(${arrayRandomColor})`;
 }
 
-console.log(getRandomColor())
-
-//COLOR PICKER
-const colorPickerBtn = document.getElementById('colorPickerBtn-el');
-let color = '#000000';
-colorPickerBtn.oninput = function () {
-    color = colorPickerBtn.value;
-    document.getElementById('color-code').textContent = colorPickerBtn.value;
-} 
-
-//GRID MAKER (GIVE AN EXPLANATION OF WHAT IS GOING ON HERE!)
-function grid() {
-    for (let i = 1; i <= gridSize; i++) {
-        //CREATE SQUARES
-        const divs = document.createElement('div');
-        divs.style.width = `${widthAndHeight}px`;
-        divs.style.height = `${widthAndHeight}px`;
-        gridContainer.appendChild(divs);
-        //SHOW GRID BUTTON
-        showGridBtn.checked ? divs.style.border = '1px solid #222' : divs.style.border = '';
-        showGridBtn.addEventListener('click', function() {
-            showGridBtn.checked ? divs.style.border = '1px solid #222' : divs.style.border = '';
-        });
-        //DRAW
-        divs.addEventListener('mouseover', () => {
-            if(mouseDown) divs.style.backgroundColor = color;
-            if(mouseDown && randomColorBtn.checked) divs.style.backgroundColor = getRandomColor();
-            if(mouseDown && eraserBtn.checked) divs.style.backgroundColor = '#efefef';
-        });
-        divs.addEventListener('click', () => {
-            divs.style.backgroundColor = color;
-            if(randomColorBtn.checked) divs.style.backgroundColor = getRandomColor();
-            if(eraserBtn.checked) divs.style.backgroundColor = '#efefef';
-        });
-        // ERASE
-        clearBtn.addEventListener('click', () => {
-            divs.style.backgroundColor = '#efefef';
-        });
-    }
-}
-grid();
+// //SHADE
+// let shade = 0.1;
+// function drawShade() {
+//     divs.style.opacity = shade;
+//     shade += 0.1;
+// }

@@ -124,14 +124,19 @@ button:hover {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    width: 90%;
-    height: 70px;
+    width: 75%;
+    height: 80px;
     border: none;
     cursor: pointer;
     background-color: transparent;
     display: block;
     margin: auto;
     margin-bottom: 15px;
+    transition: .2s;
+}
+
+#colorPickerBtn-el:hover {
+    transform: scale(1.1);
 }
 
 #colorPickerBtn-el::-webkit-color-swatch {
