@@ -9,6 +9,7 @@ const randomColorBtn = document.getElementById('randomColorBtn-el');
 //SLIDER OUTPUT E.G 'Grid Size: 5 x 5' 
 const sliderEl = document.getElementById('sliderEl');
 const sliderOutput = document.getElementById('sizeTextEl');
+
 sliderOutput.textContent = sliderEl.value + ' x ' + sliderEl.value;
 sliderEl.oninput = function() {
     sliderOutput.textContent = this.value + ' x ' + this.value;
@@ -21,6 +22,8 @@ document.querySelector('input').addEventListener('change', e => {
     gridContainer.innerHTML = '';
     widthAndHeight = 650 / e.target.value;
     createGrid(e.target.value, e.target.value);
+    draw();
+    clear();
 });
 
 //GRID MAKER (GIVE AN EXPLANATION OF WHAT IS GOING ON HERE!)
@@ -40,15 +43,15 @@ function createGrid(columns, rows) {
 }
 createGrid(sliderEl.value, sliderEl.value);
 
-//BIG LESSON LEARNED HERE!!! REMEMBER THE BIG ASS FUNCTION WE HAD? THAT WAS AVOIDED BY USING '.classList.add('divs'); ON 'gridContainer.appendChild(divs)' NOW WE CAN ACCESS THE DIVS INSIDE THE createGrid() FUNCTION IN THE GLOBAL SCOPE BY TARGETING THE '.divs'. REFER TO *
-let divsEl = document.querySelectorAll('.divs');
-
 // CLEAR BUTTON
-divsEl.forEach((divEl) => {
-    clearBtn.addEventListener('click', () =>{
-        divEl.style.backgroundColor ='#efefef';
+function clear() {
+    document.querySelectorAll('.divs').forEach((divEl) => {
+        clearBtn.addEventListener('click', () =>{
+            divEl.style.backgroundColor ='#efefef';
+        });
     });
-});
+}
+clear();
 
 //DRAWING EXPLAIN!!!
 //In order to draw only when clicking and holding, not when hovering, here is what happens: When in createGrid() mouseover activates when hovering through an element. KEEP EXPLAINING...
@@ -57,25 +60,29 @@ gridContainer.onmousedown = () => mouseDown = true;
 gridContainer.onmouseup = () => mouseDown = false;
 gridContainer.onmouseleave = () => mouseDown = false;
 
-divsEl.forEach((divEl) => {
-    divEl.addEventListener('mouseover', () => {
-        if (mouseDown && eraserBtn.checked) {
-            divEl.style.backgroundColor = '#efefef';
-        } else if (mouseDown && randomColorBtn.checked) {
-            divEl.style.backgroundColor = getRandomColor();
-        } else if (mouseDown) {
+function draw() {
+    document.querySelectorAll('.divs').forEach((divEl) => {
+        divEl.addEventListener('mouseover', () => {
+            if (mouseDown && eraserBtn.checked) {
+                divEl.style.backgroundColor = '#efefef';
+            } else if (mouseDown && randomColorBtn.checked) {
+                divEl.style.backgroundColor = getRandomColor();
+            } else if (mouseDown) {
+                divEl.style.backgroundColor = color;
+            }
+        });
+        divEl.addEventListener('click', () => {
             divEl.style.backgroundColor = color;
-        }
+            if (eraserBtn.checked) {
+                divEl.style.backgroundColor = '#efefef';
+            } else if (randomColorBtn.checked) {
+                divEl.style.backgroundColor = getRandomColor();
+            }
+        });
     });
-    divEl.addEventListener('click', () => {
-        divEl.style.backgroundColor = color;
-        if (eraserBtn.checked) {
-            divEl.style.backgroundColor = '#efefef';
-        } else if (randomColorBtn.checked) {
-            divEl.style.backgroundColor = getRandomColor();
-        }
-    });
-});
+}
+draw();
+
 
 //COLOR PICKER FUNCTION
 const colorPickerBtn = document.getElementById('colorPickerBtn-el');
@@ -90,8 +97,11 @@ function getRandomColor() {
     for (let i = 0; i < 3; i++) {
         arrayRandomColor.push(Math.floor(Math.random() * 256));
     }
-    return 'rgb' + `(${arrayRandomColor})`;
+    return `rgb(${arrayRandomColor})`;
 }
+
+// NOTES --------------------->
+//BIG LESSON LEARNED HERE!!! REMEMBER THE BIG ASS FUNCTION WE HAD? THAT WAS AVOIDED BY USING '.classList.add('divs'); ON 'gridContainer.appendChild(divs)' NOW WE CAN ACCESS THE DIVS INSIDE THE createGrid() FUNCTION IN THE GLOBAL SCOPE BY TARGETING THE '.divs'. REFER TO *
 
 // //SHADE
 // let shade = 0.1;
