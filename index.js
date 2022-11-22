@@ -24,6 +24,9 @@ document.querySelector('input').addEventListener('change', e => {
     createGrid(e.target.value, e.target.value);
     draw();
     clear();
+    showGrid();
+    eraser();
+    shading();
 });
 
 //GRID MAKER (GIVE AN EXPLANATION OF WHAT IS GOING ON HERE!)
@@ -34,14 +37,20 @@ function createGrid(columns, rows) {
         divs.style.width = `${widthAndHeight}px`;
         divs.style.height = `${widthAndHeight}px`;
         gridContainer.appendChild(divs).classList.add('divs'); // * //
-        // SHOW GRID 
-        showGridBtn.checked ? divs.style.border = '1px solid #353531' : divs.style.border = '';
-        showGridBtn.addEventListener('click', function() {
-            showGridBtn.checked ? divs.style.border = '1px solid #353531' : divs.style.border = '';
-        });
     }
 }
 createGrid(sliderEl.value, sliderEl.value);
+
+//SHOW GRID
+function showGrid() {
+    document.querySelectorAll('.divs').forEach((divEl) => {
+        showGridBtn.checked ? divEl.style.border = '1px solid #353531' : divEl.style.border = '';
+        showGridBtn.addEventListener('click', function() {
+            showGridBtn.checked ? divEl.style.border = '1px solid #353531' : divEl.style.border = '';
+        });
+    });
+}
+showGrid();
 
 // CLEAR BUTTON
 function clear() {
@@ -60,12 +69,29 @@ gridContainer.onmousedown = () => mouseDown = true;
 gridContainer.onmouseup = () => mouseDown = false;
 gridContainer.onmouseleave = () => mouseDown = false;
 
+
+
+function shading() {
+    document.querySelectorAll('.divs').forEach((divEl) => {
+        let shade = 0.1;
+        divEl.addEventListener('mouseover', () =>{
+            if (mouseDown && shadeBtn.checked) {
+                divEl.style.backgroundColor = color;
+                divEl.style.opacity = shade;
+                shade += 0.1;
+            } else if (mouseDown && shadeBtn.checked === false) {
+                shade = 1;
+                divEl.style.opacity = shade;
+            }
+        });
+    });
+}
+shading();
+
 function draw() {
     document.querySelectorAll('.divs').forEach((divEl) => {
         divEl.addEventListener('mouseover', () => {
-            if (mouseDown && eraserBtn.checked) {
-                divEl.style.backgroundColor = '#efefef';
-            } else if (mouseDown && randomColorBtn.checked) {
+            if (mouseDown && randomColorBtn.checked) {
                 divEl.style.backgroundColor = getRandomColor();
             } else if (mouseDown) {
                 divEl.style.backgroundColor = color;
@@ -73,9 +99,7 @@ function draw() {
         });
         divEl.addEventListener('click', () => {
             divEl.style.backgroundColor = color;
-            if (eraserBtn.checked) {
-                divEl.style.backgroundColor = '#efefef';
-            } else if (randomColorBtn.checked) {
+            if (randomColorBtn.checked) {
                 divEl.style.backgroundColor = getRandomColor();
             }
         });
@@ -83,6 +107,22 @@ function draw() {
 }
 draw();
 
+//ERASER
+function eraser() {
+    document.querySelectorAll('.divs').forEach((divEl) => {
+        divEl.addEventListener('mouseover', () => {
+            if (mouseDown && eraserBtn.checked) {
+                divEl.style.backgroundColor = '#efefef';
+            }
+        });
+        divEl.addEventListener('click', () => {
+            if (eraserBtn.checked) {
+                divEl.style.backgroundColor = '#efefef';
+            }
+        });
+    });
+}
+eraser();
 
 //COLOR PICKER FUNCTION
 const colorPickerBtn = document.getElementById('colorPickerBtn-el');
@@ -100,12 +140,6 @@ function getRandomColor() {
     return `rgb(${arrayRandomColor})`;
 }
 
-// NOTES --------------------->
-//BIG LESSON LEARNED HERE!!! REMEMBER THE BIG ASS FUNCTION WE HAD? THAT WAS AVOIDED BY USING '.classList.add('divs'); ON 'gridContainer.appendChild(divs)' NOW WE CAN ACCESS THE DIVS INSIDE THE createGrid() FUNCTION IN THE GLOBAL SCOPE BY TARGETING THE '.divs'. REFER TO *
+// NOTES --------------------------------------------------------->
 
-// //SHADE
-// let shade = 0.1;
-// function drawShade() {
-//     divs.style.opacity = shade;
-//     shade += 0.1;
-// }
+//BIG LESSON LEARNED HERE!!! REMEMBER THE BIG ASS FUNCTION WE HAD? THAT WAS AVOIDED BY USING '.classList.add('divs'); ON 'gridContainer.appendChild(divs)' NOW WE CAN ACCESS THE DIVS INSIDE THE createGrid() FUNCTION IN THE GLOBAL SCOPE BY TARGETING THE '.divs'. REFER TO *
