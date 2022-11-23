@@ -23,10 +23,10 @@ document.querySelector('input').addEventListener('change', e => {
     widthAndHeight = 650 / e.target.value;
     createGrid(e.target.value, e.target.value);
     draw();
-    clear();
     showGrid();
     eraser();
     shading();
+    clear();
 });
 
 //GRID MAKER (GIVE AN EXPLANATION OF WHAT IS GOING ON HERE!)
@@ -44,23 +44,21 @@ createGrid(sliderEl.value, sliderEl.value);
 //SHOW GRID
 function showGrid() {
     document.querySelectorAll('.divs').forEach((divEl) => {
-        showGridBtn.checked ? divEl.style.border = '1px solid #353531' : divEl.style.border = '';
+        if (showGridBtn.checked) {
+            divEl.style.border = '1px solid #353531';
+        } else {
+            divEl.style.border = '';
+        } 
         showGridBtn.addEventListener('click', function() {
-            showGridBtn.checked ? divEl.style.border = '1px solid #353531' : divEl.style.border = '';
+            if (showGridBtn.checked) {
+                divEl.style.border = '1px solid #353531';
+            } else {
+                divEl.style.border = '';
+            } 
         });
     });
 }
 showGrid();
-
-// CLEAR BUTTON
-function clear() {
-    document.querySelectorAll('.divs').forEach((divEl) => {
-        clearBtn.addEventListener('click', () =>{
-            divEl.style.backgroundColor ='#efefef';
-        });
-    });
-}
-clear();
 
 //DRAWING EXPLAIN!!!
 //In order to draw only when clicking and holding, not when hovering, here is what happens: When in createGrid() mouseover activates when hovering through an element. KEEP EXPLAINING...
@@ -69,25 +67,7 @@ gridContainer.onmousedown = () => mouseDown = true;
 gridContainer.onmouseup = () => mouseDown = false;
 gridContainer.onmouseleave = () => mouseDown = false;
 
-
-
-function shading() {
-    document.querySelectorAll('.divs').forEach((divEl) => {
-        let shade = 0.1;
-        divEl.addEventListener('mouseover', () =>{
-            if (mouseDown && shadeBtn.checked) {
-                divEl.style.backgroundColor = color;
-                divEl.style.opacity = shade;
-                shade += 0.1;
-            } else if (mouseDown && shadeBtn.checked === false) {
-                shade = 1;
-                divEl.style.opacity = shade;
-            }
-        });
-    });
-}
-shading();
-
+//DRAW
 function draw() {
     document.querySelectorAll('.divs').forEach((divEl) => {
         divEl.addEventListener('mouseover', () => {
@@ -99,26 +79,43 @@ function draw() {
         });
         divEl.addEventListener('click', () => {
             divEl.style.backgroundColor = color;
-            if (randomColorBtn.checked) {
-                divEl.style.backgroundColor = getRandomColor();
-            }
+            if (randomColorBtn.checked) divEl.style.backgroundColor = getRandomColor();
         });
     });
 }
 draw();
 
+//CLEAR
+// function clear() {
+//     document.querySelectorAll('.divs').forEach((divEl) => {
+//         clearBtn.addEventListener('click', () => {
+//             divEl.style.removeProperty('background-color');
+//         });
+//     });
+// }
+// clear();
+
+function clear() {
+    clearBtn.addEventListener('click', () => {
+        gridContainer.innerHTML = '';
+        widthAndHeight = 650 / sliderEl.value;
+        createGrid(sliderEl.value, sliderEl.value);
+        draw();
+        showGrid();
+        eraser();
+        shading();
+    })
+}
+clear();
+
 //ERASER
 function eraser() {
     document.querySelectorAll('.divs').forEach((divEl) => {
         divEl.addEventListener('mouseover', () => {
-            if (mouseDown && eraserBtn.checked) {
-                divEl.style.backgroundColor = '#efefef';
-            }
+            if (mouseDown && eraserBtn.checked) divEl.style.removeProperty('background-color'); 
         });
         divEl.addEventListener('click', () => {
-            if (eraserBtn.checked) {
-                divEl.style.backgroundColor = '#efefef';
-            }
+            if (eraserBtn.checked) divEl.style.removeProperty('background-color'); 
         });
     });
 }
@@ -127,7 +124,7 @@ eraser();
 //COLOR PICKER FUNCTION
 const colorPickerBtn = document.getElementById('colorPickerBtn-el');
 let color = '#000000';
-colorPickerBtn.oninput = function () {
+colorPickerBtn.oninput = () => {
     color = colorPickerBtn.value;
     document.getElementById('color-code').textContent = colorPickerBtn.value;
 } 
@@ -139,6 +136,44 @@ function getRandomColor() {
     }
     return `rgb(${arrayRandomColor})`;
 }
+
+//SHADING
+function shading() {
+    document.querySelectorAll('.divs').forEach((divEl) => {
+        let shade = 0.1;
+        divEl.addEventListener('mouseover', () =>{
+            if (mouseDown && eraserBtn.checked) {
+                divEl.style.opacity = 0.1;
+                shade = 0.1;
+            } else if (mouseDown && shadeBtn.checked) {
+                divEl.style.opacity = shade;
+                shade += 0.1;
+            } else if (mouseDown && shadeBtn.checked === false) {
+                shade = 1;
+                divEl.style.opacity = shade;
+            }
+        });
+        divEl.addEventListener('click', () => {
+            if (eraserBtn.checked) {
+                divEl.style.opacity = 0.1;
+                shade = 0.1;
+            } else if (shadeBtn.checked) {
+                divEl.style.opacity = shade;
+                shade += 0.1;
+            } else if (shadeBtn.checked === false) {
+                shade = 1;
+                divEl.style.opacity = shade;
+            }
+        });
+        // CLEAR BUTTON
+        // clearBtn.addEventListener('click', () => {
+        //     divEl.style.removeProperty('background-color');
+        //     divEl.style.opacity = 0.1;
+        //     shade = 0.1;
+        // });
+    });
+}
+shading();
 
 // NOTES --------------------------------------------------------->
 
