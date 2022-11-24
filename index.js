@@ -1,3 +1,8 @@
+//TO DO -------------------->
+// 2) Fix border opacity
+// 3) Animate page with rgb transition
+// 4) Fix clear button and ask why is it slow with certain functions
+
 const gridContainer = document.getElementById('grid-container');
 //BUTTON ELEMENTS
 const showGridBtn = document.getElementById('showGrid-el');
@@ -86,27 +91,27 @@ function draw() {
 draw();
 
 //CLEAR
-// function clear() {
-//     document.querySelectorAll('.divs').forEach((divEl) => {
-//         clearBtn.addEventListener('click', () => {
-//             divEl.style.removeProperty('background-color');
-//         });
-//     });
-// }
-// clear();
-
 function clear() {
-    clearBtn.addEventListener('click', () => {
-        gridContainer.innerHTML = '';
-        widthAndHeight = 650 / sliderEl.value;
-        createGrid(sliderEl.value, sliderEl.value);
-        draw();
-        showGrid();
-        eraser();
-        shading();
-    })
+    document.querySelectorAll('.divs').forEach((divEl) => {
+        clearBtn.addEventListener('click', () => {
+            divEl.style.removeProperty('background-color');
+        });
+    });
 }
 clear();
+
+// function clear() {
+//     clearBtn.addEventListener('click', () => {
+//         gridContainer.innerHTML = '';
+//         widthAndHeight = 650 / sliderEl.value;
+//         createGrid(sliderEl.value, sliderEl.value);
+//         draw();
+//         showGrid();
+//         eraser();
+//         shading();
+//     })
+// }
+// clear();
 
 //ERASER
 function eraser() {

@@ -84,11 +84,13 @@ h2 {
     text-align: center;
 }
 
-input[type='checkbox'] {
+input[type='checkbox'],
+input[type='radio'] {
     display: none;
 }
 
-input[type='checkbox'] + label, 
+input[type='checkbox'] + label,
+input[type='radio'] + label, 
 button {
     display: block;
     margin-bottom: 15px;
@@ -106,6 +108,8 @@ button {
 
 input[type='checkbox']:checked + label,
 input[type='checkbox']:hover + label,
+input[type='radio']:checked + label,
+input[type='radio']:hover + label,
 button:hover {
     background-color:#efefef;
     color: #353531;
