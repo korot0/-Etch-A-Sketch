@@ -53,6 +53,7 @@ h1 {
     gap: 20px;
     width: 180px;
     align-items: center;
+    margin-right: 30px;
 }
 
 #gridSize {
@@ -150,7 +151,7 @@ button:hover {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    min-width: 125px;
+    min-width: 120px;
     height: 80px;
     border: none;
     cursor: pointer;

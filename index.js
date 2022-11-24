@@ -1,9 +1,8 @@
 //TO DO -------------------->
-// 2) Fix border opacity
-// 3) Fix canvas alignment with header
-// 4) Fix clear button and ask why is it slow with certain functions
-// 5) Do shading when pressing shift
-// 6) rgb and shading black color bug
+// Fix canvas alignment with header
+// Fix clear button and ask why is it slow with certain functions
+// Fix eraser button
+// Fix shade button
 
 const gridContainer = document.getElementById('grid-container');
 //BUTTON ELEMENTS
@@ -32,8 +31,8 @@ document.querySelector('input').addEventListener('change', e => {
     draw();
     showGrid();
     eraser();
-    shading();
     clear();
+    shading();
 });
 
 //GRID MAKER (GIVE AN EXPLANATION OF WHAT IS GOING ON HERE!)
@@ -43,8 +42,6 @@ function createGrid(columns, rows) {
         const divs = document.createElement('div');
         divs.style.width = `${widthAndHeight}px`;
         divs.style.height = `${widthAndHeight}px`;
-        // divs.style.backgroundColor = '#efefef';
-        // divs.style.margin = '1px';
         gridContainer.appendChild(divs).classList.add('divs'); // * //
     }
 }
@@ -53,21 +50,27 @@ createGrid(sliderEl.value, sliderEl.value);
 //SHOW GRID
 function showGrid() {
     document.querySelectorAll('.divs').forEach((divEl) => {
-        if (showGridBtn.checked) {
-            divEl.style.border = '1px solid #353531';
-        } else {
-            divEl.style.border = '';
-        } 
+        showGridBtn.checked
+        ? divEl.style.border = '1px solid #71716F' 
+        : divEl.style.border = ''; 
         showGridBtn.addEventListener('click', function() {
-            if (showGridBtn.checked) {
-                divEl.style.border = '1px solid #353531';
-            } else {
-                divEl.style.border = '';
-            } 
+            showGridBtn.checked
+            ? divEl.style.border = '1px solid #71716F' 
+            : divEl.style.border = '';  
         });
     });
 }
 showGrid();
+
+//CLEAR
+function clear() {
+    document.querySelectorAll('.divs').forEach((divEl) => {
+        clearBtn.addEventListener('click', () => {
+            divEl.style.removeProperty('background-color');
+        });
+    });
+}
+clear();
 
 //DRAWING EXPLAIN!!!
 //In order to draw only when clicking and holding, not when hovering, here is what happens: When in createGrid() mouseover activates when hovering through an element. KEEP EXPLAINING...
@@ -87,35 +90,13 @@ function draw() {
             }
         });
         divEl.addEventListener('click', () => {
-            divEl.style.backgroundColor = color;
-            if (randomColorBtn.checked) divEl.style.backgroundColor = getRandomColor();
+            randomColorBtn.checked 
+            ? divEl.style.backgroundColor = getRandomColor() 
+            : divEl.style.backgroundColor = color;
         });
     });
 }
 draw();
-
-//CLEAR
-function clear() {
-    document.querySelectorAll('.divs').forEach((divEl) => {
-        clearBtn.addEventListener('click', () => {
-            divEl.style.removeProperty('background-color');
-        });
-    });
-}
-clear();
-
-// function clear() {
-//     clearBtn.addEventListener('click', () => {
-//         gridContainer.innerHTML = '';
-//         widthAndHeight = 650 / sliderEl.value;
-//         createGrid(sliderEl.value, sliderEl.value);
-//         draw();
-//         showGrid();
-//         eraser();
-//         shading();
-//     })
-// }
-// clear();
 
 //ERASER
 function eraser() {
@@ -137,6 +118,31 @@ colorPickerBtn.oninput = () => {
     color = colorPickerBtn.value;
     document.getElementById('color-code').textContent = colorPickerBtn.value;
 } 
+//HEX TO RGB FUNCTION
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+}
+//SHADING
+function shading() {
+    document.querySelectorAll('.divs').forEach((divEl) => {
+        let opacity = 0.1;
+        divEl.addEventListener('mouseover', () => {
+            if (mouseDown && shadeBtn.checked) {
+                let rgb = hexToRgb(color).r + ',' + hexToRgb(color).g + ',' +hexToRgb(color).b;
+                let rgba = (`rgba(${rgb + ',' + opacity})`)
+                opacity += 0.1;
+                divEl.style.backgroundColor = rgba;
+            }
+        });
+    });
+}
+shading();
+
 //RANDOM COLOR FUNCTION
 function getRandomColor() {
     let arrayRandomColor = [];
@@ -145,44 +151,6 @@ function getRandomColor() {
     }
     return `rgb(${arrayRandomColor})`;
 }
-
-//SHADING
-function shading() {
-    document.querySelectorAll('.divs').forEach((divEl) => {
-        let shade = 0.1;
-        divEl.addEventListener('mouseover', () =>{
-            if (mouseDown && eraserBtn.checked) {
-                divEl.style.opacity = 0.1;
-                shade = 0.1;
-            } else if (mouseDown && shadeBtn.checked) {
-                divEl.style.opacity = shade;
-                shade += 0.1;
-            } else if (mouseDown && shadeBtn.checked === false) {
-                shade = 1;
-                divEl.style.opacity = shade;
-            }
-        });
-        divEl.addEventListener('click', () => {
-            if (eraserBtn.checked) {
-                divEl.style.opacity = 0.1;
-                shade = 0.1;
-            } else if (shadeBtn.checked) {
-                divEl.style.opacity = shade;
-                shade += 0.1;
-            } else if (shadeBtn.checked === false) {
-                shade = 1;
-                divEl.style.opacity = shade;
-            }
-        });
-        // CLEAR BUTTON
-        // clearBtn.addEventListener('click', () => {
-        //     divEl.style.removeProperty('background-color');
-        //     divEl.style.opacity = 0.1;
-        //     shade = 0.1;
-        // });
-    });
-}
-shading();
 
 // NOTES --------------------------------------------------------->
 
