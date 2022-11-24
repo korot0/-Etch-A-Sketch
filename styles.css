@@ -19,6 +19,23 @@ body {
     padding: 10px;
 }
 
+h1 {
+    background: linear-gradient(90deg, #ff0000, #ffff00, #ff00f3, #0033ff, #ff00c4, #ff0000);
+    background-size: 300%;
+    font-size: 50px;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    animation: animate 10s linear infinite;
+}
+@keyframes animate {
+    0%{
+        background-position: 0%;
+    }
+    100%{
+        background-position: 400%;
+    }
+}
+
 /* MAIN CONTAINER */
 #container{
     /* border: 2px solid brown; */
@@ -84,6 +101,11 @@ h2 {
     text-align: center;
 }
 
+input,
+button {
+    min-width: 141px;
+}
+
 input[type='checkbox'],
 input[type='radio'] {
     display: none;
@@ -128,7 +150,7 @@ button:hover {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    width: 75%;
+    min-width: 125px;
     height: 80px;
     border: none;
     cursor: pointer;

@@ -1,7 +1,9 @@
 //TO DO -------------------->
 // 2) Fix border opacity
-// 3) Animate page with rgb transition
+// 3) Fix canvas alignment with header
 // 4) Fix clear button and ask why is it slow with certain functions
+// 5) Do shading when pressing shift
+// 6) rgb and shading black color bug
 
 const gridContainer = document.getElementById('grid-container');
 //BUTTON ELEMENTS
@@ -41,6 +43,8 @@ function createGrid(columns, rows) {
         const divs = document.createElement('div');
         divs.style.width = `${widthAndHeight}px`;
         divs.style.height = `${widthAndHeight}px`;
+        // divs.style.backgroundColor = '#efefef';
+        // divs.style.margin = '1px';
         gridContainer.appendChild(divs).classList.add('divs'); // * //
     }
 }
