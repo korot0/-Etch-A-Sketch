@@ -2,7 +2,8 @@
 // Fix canvas alignment with header
 // Fix clear button and ask why is it slow with certain functions
 // Fix eraser button
-// Fix shade button
+// Fix footer scaling
+// Canvas color
 
 const gridContainer = document.getElementById('grid-container');
 //BUTTON ELEMENTS
@@ -32,13 +33,11 @@ document.querySelector('input').addEventListener('change', e => {
     showGrid();
     eraser();
     clear();
-    shading();
 });
 
 //GRID MAKER (GIVE AN EXPLANATION OF WHAT IS GOING ON HERE!)
 function createGrid(columns, rows) {
     for (let i = 1; i <= (columns * rows); i++) {
-        //CREATE SQUARES
         const divs = document.createElement('div');
         divs.style.width = `${widthAndHeight}px`;
         divs.style.height = `${widthAndHeight}px`;
@@ -82,17 +81,28 @@ gridContainer.onmouseleave = () => mouseDown = false;
 //DRAW
 function draw() {
     document.querySelectorAll('.divs').forEach((divEl) => {
+        let opacity = 0.1;
         divEl.addEventListener('mouseover', () => {
             if (mouseDown && randomColorBtn.checked) {
                 divEl.style.backgroundColor = getRandomColor();
+            } else if (mouseDown && shadeBtn.checked) {
+                opacity += 0.1;
+                divEl.style.backgroundColor = shading(opacity);
             } else if (mouseDown) {
+                opacity = 1;
                 divEl.style.backgroundColor = color;
             }
         });
         divEl.addEventListener('click', () => {
-            randomColorBtn.checked 
-            ? divEl.style.backgroundColor = getRandomColor() 
-            : divEl.style.backgroundColor = color;
+            if (randomColorBtn.checked ) {
+                divEl.style.backgroundColor = getRandomColor() 
+            } else if (shadeBtn.checked) {
+                opacity += 0.1;
+                divEl.style.backgroundColor = shading(opacity);
+            } else {
+                opacity = 1;
+                divEl.style.backgroundColor = color;
+            }
         });
     });
 }
@@ -102,7 +112,9 @@ draw();
 function eraser() {
     document.querySelectorAll('.divs').forEach((divEl) => {
         divEl.addEventListener('mouseover', () => {
-            if (mouseDown && eraserBtn.checked) divEl.style.removeProperty('background-color'); 
+            if (mouseDown && eraserBtn.checked) {
+                divEl.style.removeProperty('background-color');
+            }
         });
         divEl.addEventListener('click', () => {
             if (eraserBtn.checked) divEl.style.removeProperty('background-color'); 
@@ -116,7 +128,8 @@ const colorPickerBtn = document.getElementById('colorPickerBtn-el');
 let color = '#000000';
 colorPickerBtn.oninput = () => {
     color = colorPickerBtn.value;
-    document.getElementById('color-code').textContent = colorPickerBtn.value;
+    // document.getElementById('color-code').textContent = colorPickerBtn.value;
+    // HTML -> <span id="color-code">#000000</span>
 } 
 //HEX TO RGB FUNCTION
 function hexToRgb(hex) {
@@ -127,21 +140,14 @@ function hexToRgb(hex) {
       b: parseInt(result[3], 16)
     } : null;
 }
+
 //SHADING
-function shading() {
-    document.querySelectorAll('.divs').forEach((divEl) => {
-        let opacity = 0.1;
-        divEl.addEventListener('mouseover', () => {
-            if (mouseDown && shadeBtn.checked) {
-                let rgb = hexToRgb(color).r + ',' + hexToRgb(color).g + ',' +hexToRgb(color).b;
-                let rgba = (`rgba(${rgb + ',' + opacity})`)
-                opacity += 0.1;
-                divEl.style.backgroundColor = rgba;
-            }
-        });
-    });
+function shading(opacity) {
+    let rgb = hexToRgb(color).r + ',' + hexToRgb(color).g + ',' +hexToRgb(color).b;
+    let rgba = (`rgba(${rgb + ',' + opacity})`)
+    opacity += 0.1;
+    return rgba;
 }
-shading();
 
 //RANDOM COLOR FUNCTION
 function getRandomColor() {
