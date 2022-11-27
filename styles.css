@@ -38,7 +38,6 @@ h1 {
 
 /* MAIN CONTAINER */
 #container{
-    /* border: 2px solid brown; */
     display: flex;
     width: 100%;
     margin-top: 40px;
@@ -47,7 +46,6 @@ h1 {
 
 /* SETTINGS CONTAINER */
 #settings-container {
-    /* border: 2px solid hotpink; */
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -95,6 +93,10 @@ h1 {
 h2 {
     margin: 0;
     text-align: center;
+}
+
+#canvas-color {
+    margin-bottom: 15px;
 }
 
 #gridSize,
@@ -147,12 +149,12 @@ button:hover {
     text-align: center;
 }
 
-#colorPickerBtn-el {
+.colorInput {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    min-width: 120px;
-    height: 80px;
+    min-width: 100px;
+    height: 50px;
     border: none;
     cursor: pointer;
     background-color: transparent;
@@ -162,25 +164,25 @@ button:hover {
     transition: .2s;
 }
 
-#colorPickerBtn-el:hover {
+.colorInput:hover {
     transform: scale(1.1);
 }
 
-#colorPickerBtn-el::-webkit-color-swatch {
+.colorInput::-webkit-color-swatch {
     border-radius: 15px;
     border: none;
 }
 
-#colorPickerBtn-el::-moz-color-swatch {
+.colorInput::-moz-color-swatch {
     border-radius: 15px;
     border: none;
 }
 
 /* GRID CONTAINER */
 #grid-container {
-    width: 650px;
-    min-width: 650px;
-    height: 650px;
+    width: 550px;
+    min-width: 550px;
+    height: 550px;
     background-color: #efefef;
     display: flex;
     flex-wrap: wrap;
